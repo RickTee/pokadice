@@ -32,21 +32,21 @@ public:
     QPushButton *toggleButton;
     QPushButton *rollDiceButton;
     QLabel      *rollCountLabel;
-    QPixmap *dicePixmaps[6];
-    rkDice * diceArray[6];
-    int numOfDice;
-    int rollCount;
-    void *random;
+    QPixmap     *dicePixmaps[6];
+    rkDice      *diceArray[6];
+    int         numOfDice;
+    int         rollCount;
+    int         diceValues[6];
     
     void randomize(void);
     int randNum(int);
     
-private slots:
+public slots:
 	//void slot_clicked (int state){ clicked(state); }
     void toggleHolds();
     void rollDice();
 signals:
-	//void sig_clicked();
+    void diceRolled();
 
 };
 

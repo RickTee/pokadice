@@ -21,8 +21,7 @@ rkDice::rkDice(int num, QPixmap *diceImage, QWidget * parent) : QWidget (parent)
     this->holdButton        = new QPushButton("Hold");
     this->diceFace          = new QLabel("0");
     
-    this->holdButton->setMinimumWidth(40);
-    this->holdButton->setMaximumWidth(40);
+    this->holdButton->setFixedWidth(40);
     this->holdButton->setCheckable(true);
     this->diceFace->setLineWidth(2);
     this->diceFace->setFrameStyle(QFrame::Panel | QFrame::Raised);
@@ -37,6 +36,7 @@ rkDice::rkDice(int num, QPixmap *diceImage, QWidget * parent) : QWidget (parent)
     this->hBoxHoldButton->insertStretch(-1);
     
     this->vBox->setContentsMargins(0,0,0,0);
+    this->onOff = false;
     connect(this->holdButton, SIGNAL(clicked()), SLOT(setHold()));
     // Set the dice image to num
     this->setNum(num, diceImage);
@@ -62,7 +62,7 @@ int rkDice::getNum()
     return this->number;
     }
 
-void rkDice::setHold()
+void rkDice::setHold(void)
 {
     // Hold off
     if(this->onOff)
@@ -80,4 +80,9 @@ void rkDice::setHold()
         this->holdButton->setText("Held");
         this->holdButton->setChecked(true);
     }
+}
+    
+bool rkDice::getHold(void)
+{
+    return this->onOff;
 }

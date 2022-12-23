@@ -29,7 +29,8 @@ rkDiceControl::rkDiceControl(int numOfDice, QWidget * parent) : QWidget (parent)
     }
     for(i = 0; i < this->numOfDice; i ++)
     {
-        this->diceArray[i]  = new rkDice(6, this->dicePixmaps[5]);
+        this->diceValues[i] = randNum(6);
+        this->diceArray[i]  = new rkDice(this->diceValues[i], this->dicePixmaps[this->diceValues[i]]);
         this->hBox->addWidget(this->diceArray[i]);
     }
     this->vBox              = new QVBoxLayout();
@@ -62,7 +63,7 @@ rkDiceControl::~rkDiceControl() {
 void rkDiceControl::toggleHolds()
 {
     int i;
-    for(i=0; i<this->numOfDice; i++)
+    for(i=0; i < this->numOfDice; i++)
     {
         this->diceArray[i]->setHold();
     }
@@ -70,17 +71,22 @@ void rkDiceControl::toggleHolds()
 
 void rkDiceControl::rollDice()
 {
-    int i, j;
+    int i;
     
     if(this->rollCount > 0)
     {
         for(i=0; i < this->numOfDice; i++)
         {
-            j = randNum(6);
-            this->diceArray[i]->setNum(j, this->dicePixmaps[j]);
+            if(!(this->diceArray[i]->getHold()))
+            {
+                this->diceValues[i] = randNum(6);
+                this->diceArray[i]->setNum(this->diceValues[i], this->dicePixmaps[this->diceValues[i]]);
+            }
         }
-        --this->rollCount;
+        //--this->rollCount;
         this->rollCountLabel->setText(QString::number(this->rollCount));
+        // Send signal dice_rolled
+        emit diceRolled();
     }
 }
 
@@ -95,18 +101,3 @@ int rkDiceControl::randNum(int max)
 	if(num == max) { num = randNum(max); }
 	return(num);
 }
-
-
-// Seed random number.
-void rkDiceControl::randomize(void)
-{
-    unsigned int stime;
-    time_t ltime;
-
-	ltime = time(NULL);
-	// Make small time difference of greater significance
-	// to prevent repeating random sequences.
-	ltime = ltime << 21;
-	stime = (unsigned) ltime / 2;
-	srand(stime);
-	}

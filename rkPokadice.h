@@ -8,7 +8,7 @@
  * File:   rkPokadice.h
  * Author: rick
  *
- * Created on 17 December 2022, 14:20
+ * Created on 20 December 2022, 14:20
  */
 
 #ifndef RKPOKADICE_H
@@ -28,10 +28,11 @@ public:
     QVBoxLayout     *vBox;
     rkDiceControl   *diceControl;
     rkScorecard     *scorecard;
-    
-    //void setHold(int state){ clicked(state); }
-    public slots:
+    private:
+        void randomize(void);
+    private slots:
         //void setHold();
+        void rolledDice();
     signals:
 	//void sig_clicked();
 };

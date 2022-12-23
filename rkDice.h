@@ -33,7 +33,7 @@ public:
     QPushButton *holdButton;
     QPixmap     *pixMap;
     bool        onOff;
-    bool getHold();
+    bool getHold(void);
     void setNum(int, QPixmap *);
     int getNum(void);
     int number;

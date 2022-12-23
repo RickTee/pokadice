@@ -14,9 +14,7 @@
 #include <QApplication>
 #include <QWidget>
 #include <qt5/QtWidgets/qlayout.h>
-#include "rkDiceControl.h"
-//#include "rkScorecard.h"
-//#include "rkPokadice.h"
+#include "rkPokadice.h"
 
 int main(int argc, char *argv[]) {
     // initialize resources, if needed
@@ -24,7 +22,7 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
     // create and show your widgets here
-    rkDiceControl dice_1(5);
+    rkPokadice dice_1;
     
     dice_1.show();
     return app.exec();
