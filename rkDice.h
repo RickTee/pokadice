@@ -33,15 +33,19 @@ public:
     QPushButton *holdButton;
     QPixmap     *pixMap;
     bool        onOff;
+    
     bool getHold(void);
+    void disableHold(void);
+    void enableHold(void);
+    void resetHold(void);
     void setNum(int, QPixmap *);
     int getNum(void);
     int number;
-    //void setHold(int state){ clicked(state); }
+    
     public slots:
-        void setHold();
+        void slotToggleHold(void);
+        
     signals:
-	//void sig_clicked();
 };
 
 #endif /* RKDICE_H */

@@ -9,9 +9,10 @@
         <group>
             <file>file:/home/rick/Projects/QtPokaDice/rkPokadice.h</file>
             <file>file:/home/rick/Projects/QtPokaDice/rkScorecard.h</file>
-            <file>file:/home/rick/Projects/QtPokaDice/rkDiceControl.h</file>
+            <file>file:/home/rick/Projects/QtPokaDice/rkDialog.h</file>
             <file>file:/home/rick/Projects/QtPokaDice/rkPokadice.cpp</file>
             <file>file:/home/rick/Projects/QtPokaDice/rkScorecard.cpp</file>
+            <file>file:/home/rick/Projects/QtPokaDice/rkDialog.cpp</file>
             <file>file:/home/rick/Projects/QtPokaDice/rkDiceControl.cpp</file>
         </group>
     </open-files>

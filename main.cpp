@@ -21,9 +21,11 @@ int main(int argc, char *argv[]) {
     // Q_INIT_RESOURCE(resfile);
 
     QApplication app(argc, argv);
+
     // create and show your widgets here
-    rkPokadice dice_1;
+    rkPokadice pokadice;
     
-    dice_1.show();
+    pokadice.show();
+    
     return app.exec();
 }

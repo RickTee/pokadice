@@ -37,14 +37,16 @@ public:
     int         numOfDice;
     int         rollCount;
     int         diceValues[6];
-    
-    void randomize(void);
+
     int randNum(int);
+    void diceReset(void);
+    void disableHolds(void);
     
 public slots:
 	//void slot_clicked (int state){ clicked(state); }
     void toggleHolds();
     void rollDice();
+    
 signals:
     void diceRolled();
 

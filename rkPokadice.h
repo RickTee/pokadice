@@ -16,8 +16,12 @@
 
 #include <QWidget>
 #include <QBoxLayout>
+#include <QTabWidget>
+#include <QMenuBar>
+#include "rkDialog.h"
 #include "rkDiceControl.h"
 #include "rkScorecard.h"
+#include "rkPrefs.h"
 
 class rkPokadice : public QWidget{
     Q_OBJECT
@@ -28,13 +32,39 @@ public:
     QVBoxLayout     *vBox;
     rkDiceControl   *diceControl;
     rkScorecard     *scorecard;
+    QTabWidget      *scoreTabs;
+    QMenuBar        *menuBar;
+    QMenu           *fileMenu;
+    QMenu           *settingsMenu;
+    QMenu           *helpMenu;
+    QAction         *newGame;
+    QAction         *quitGame;
+    QAction         *preferences;
+    QAction         *about;
+    rkPrefs         *prefs;
+    rkDialog        *gameOverDialog;
+    void            addScorecards(void);
     private:
+        void buildMenu(void);
         void randomize(void);
+    public slots:
+        void slotSetScore(void);  // Tell the current players scorecard
+                                    // to display possible scores.
+	//void slotIsGameOver(void);  // Check for end game.
+	//void slotAddPlayer(void);   // Add a scorecard.
+	//void slotChangeName(void);  // Change the tab name.
+	//void slotDeletePlayer(void);// Remove a scorecard.
+	//void slotNewGame(void);     // Reset scorecards and dice.
+	//void slotAbout(void);       // About dialog.
+        void slotEndTurn(void);
     private slots:
-        //void setHold();
-        void rolledDice();
+        void slotNewGame(void);
+        void slotQuitGame(void);
+        void slotPrefs(void);
+        void slotAbout(void);
     signals:
-	//void sig_clicked();
+	void sigGameOver(void);
+        void sigExit(void);         // User wants to quit.
 };
 
 #endif /* RKPOKADICE_H */

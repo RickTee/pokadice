@@ -25,7 +25,7 @@ rkDiceControl::rkDiceControl(int numOfDice, QWidget * parent) : QWidget (parent)
     for(i = 0; i < 6; i ++)
     {
         QString tmp = QString::number(i+1);
-        this->dicePixmaps[i] = new QPixmap("gfx/d" + tmp + ".gif");
+        this->dicePixmaps[i] = new QPixmap("gfx/d" + tmp + ".png");
     }
     for(i = 0; i < this->numOfDice; i ++)
     {
@@ -50,6 +50,11 @@ rkDiceControl::rkDiceControl(int numOfDice, QWidget * parent) : QWidget (parent)
     this->vBox->addWidget(this->rollDiceButton);
     this->hBox->addLayout(this->vBox);
     
+    for(i = 0; i < this->numOfDice; i ++)
+    {
+        this->diceArray[i]->disableHold();
+    }
+    
     connect(this->toggleButton, SIGNAL(clicked()), SLOT(toggleHolds()));
     connect(this->rollDiceButton, SIGNAL(clicked()), SLOT(rollDice()));
 }
@@ -60,13 +65,36 @@ rkDiceControl::rkDiceControl(int numOfDice, QWidget * parent) : QWidget (parent)
 rkDiceControl::~rkDiceControl() {
 }
 
-void rkDiceControl::toggleHolds()
+void rkDiceControl::disableHolds(void)
 {
     int i;
     for(i=0; i < this->numOfDice; i++)
     {
-        this->diceArray[i]->setHold();
+        this->diceArray[i]->disableHold();
     }
+}
+
+void rkDiceControl::toggleHolds(void)
+{
+    int i;
+    for(i=0; i < this->numOfDice; i++)
+    {
+        this->diceArray[i]->slotToggleHold();
+    }
+}
+
+void rkDiceControl::diceReset(void)
+{
+    int i;
+    for(i=0; i < this->numOfDice; i++)
+    {
+        /* Reset all the hold buttons and disable them */
+        this->diceArray[i]->resetHold();
+        //this->diceArray[i]->disableHold();
+    }
+    /* Reset the roll count */
+    this->rollCount = 3;
+    this->rollCountLabel->setText(QString::number(this->rollCount));
 }
 
 void rkDiceControl::rollDice()
@@ -82,9 +110,11 @@ void rkDiceControl::rollDice()
                 this->diceValues[i] = randNum(6);
                 this->diceArray[i]->setNum(this->diceValues[i], this->dicePixmaps[this->diceValues[i]]);
             }
+            this->diceArray[i]->enableHold();
         }
-        //--this->rollCount;
+        --this->rollCount;
         this->rollCountLabel->setText(QString::number(this->rollCount));
+        
         // Send signal dice_rolled
         emit diceRolled();
     }

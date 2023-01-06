@@ -21,10 +21,7 @@
 
 #define NUMOFSCORES     19
 #define UPPERSCORES	6
-//#define UPPERTOTALS	3
-//#define	LOWERSCORES	UPPERSCORES + UPPERTOTALS + 7	
-//#define LOWERTOTALS	3
-#define NUMOFDICE       5
+#define TOTALSCORES     13
 
 /* enums: For clarity when indexing arrays. */
 enum scores
@@ -48,32 +45,35 @@ public:
     QPushButton *scoreButtons[NUMOFSCORES];
     bool        scoreDone[NUMOFSCORES];
     int         score[NUMOFSCORES];
+    int         cardFull;
     void        toggleScoreButtons(bool);
     void        scorecardReset(void);
-    //void        fixScore(int);
-    public slots:
-        void setScore(int *);
-        void fixScore(int);
-    signals:
-	void sig_clicked(int );
+    void        setTotal(void);
+    void        fixScore(int);
+    void        setScore(int *);
+    // Check if this score card is full
+    bool        isScorecardFull(void);
+
     private slots:
         // These just map the button released signals of the scores
         // to the fix_score() method so it knows which button was
         // pressed.
-        void slot_ace       (){ fixScore(ACE);          }
-        void slot_two       (){ fixScore(TWO);          }
-        void slot_three     (){ fixScore(THREE);        }
-        void slot_four      (){ fixScore(FOUR);         }
-        void slot_five      (){ fixScore(FIVE);         }
-        void slot_six       (){ fixScore(SIX);          }
-        void slot_threeof   (){ fixScore(THREEOFAKIND); }
-        void slot_fourof    (){ fixScore(FOUROFAKIND);  }
-        void slot_fhouse    (){ fixScore(FULLHOUSE);    }
-        void slot_lstrght   (){ fixScore(LOWSTRAIGHT);  }
-        void slot_hstrght   (){ fixScore(HIGHSTRAIGHT); }
-        void slot_poka      (){ fixScore(POKA);         }
-        void slot_chance    (){ fixScore(CHANCE);       }
-    
+        void slotAce(void)          { fixScore(ACE);          }
+        void slotTwo(void)          { fixScore(TWO);          }
+        void slotThree(void)        { fixScore(THREE);        }
+        void slotFour(void)         { fixScore(FOUR);         }
+        void slotFive(void)         { fixScore(FIVE);         }
+        void slotSix(void)          { fixScore(SIX);          }
+        void slotThreeOfaKind(void) { fixScore(THREEOFAKIND); }
+        void slotFourOfaKind(void)  { fixScore(FOUROFAKIND);  }
+        void slotFullHouse(void)    { fixScore(FULLHOUSE);    }
+        void slotLowStrght(void)    { fixScore(LOWSTRAIGHT);  }
+        void slotHighStrght(void)   { fixScore(HIGHSTRAIGHT); }
+        void slotPoka(void)         { fixScore(POKA);         }
+        void slotChance(void)       { fixScore(CHANCE);       }
+        
+    signals:
+	void sigTurnDone(void);
 };
 
 #endif /* RKSCORECARD_H */

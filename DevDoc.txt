@@ -1,0 +1,39 @@
+# 26/12/2022
+# QtPokaDice development docs
+# Author: Richard Townsend
+#
+Objects:
+    rkDice
+    rkDiceControl
+    rkScorecard
+    rkPokadice
+    rkPrefs
+    rkMenu
+    rkHighScore
+    rkGameOver
+
+Main: open window and name it "Pokingtondiceville
+
+rkPokadice:
+    Load prefs
+    Set-up tab widget
+    Add player scorecards
+    Initialise game
+	Lock hold and score buttons
+	Clear score and score done arrays
+	Set roll count to 3
+	
+    Events:
+	Roll dice:
+	    Set possible scores
+	    Unlock hold and score buttons
+	Press score button:
+	    Set the score, perm-lock that score button
+	    Lock the score buttons
+	    Check for end game
+	    Reset roll count to 3
+
+# eof
+
+
+
