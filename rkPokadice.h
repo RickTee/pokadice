@@ -31,7 +31,7 @@ public:
     virtual ~rkPokadice();
     QVBoxLayout     *vBox;
     rkDiceControl   *diceControl;
-    rkScorecard     *scorecard;
+    rkScorecard     *scorecard[MAXPLAYERS];
     QTabWidget      *scoreTabs;
     QMenuBar        *menuBar;
     QMenu           *fileMenu;
@@ -42,8 +42,10 @@ public:
     QAction         *preferences;
     QAction         *about;
     rkPrefs         *prefs;
-    rkDialog        *gameOverDialog;
+    rkDialog        *dialog;
+    int             currentPlayer;
     void            addScorecards(void);
+    void            endGame(void);
     private:
         void buildMenu(void);
         void randomize(void);

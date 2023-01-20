@@ -18,24 +18,35 @@
 #include <QLabel>
 #include <QBoxLayout>
 #include <QPushButton>
+#include "rkPrefs.h"
 
 class rkDialog : public QDialog{
     Q_OBJECT
 public:
     rkDialog(QDialog * parent = 0);
+    rkDialog(QString *name, int score, QDialog * parent = 0);
+    rkDialog(QString **names, int *scores, QDialog * parent = 0);
+    rkDialog(rkPrefs *prefs, QDialog * parent = 0);
     //rkDialog(const rkDialog& orig);
     virtual ~rkDialog();
     QVBoxLayout *vBox;
     QHBoxLayout *hBox;
+    QHBoxLayout *hBox1;
     QLabel      *title;
     QLabel      *message;
+    QLabel      *winnerScore;
+    QPushButton *addPlayerButton;
+    QPushButton *deletePlayerButton;
     QPushButton *okButton;
+    QPushButton *newGameButton;
     QPushButton *quitButton;
     QPushButton *resetScoreButton;
+    void setMessage(QString);
     
     public slots:
-        void slotQuitGame(void);
-        void slotNewGame(void);
+        void slotExitDialog(void);
+        void slotAddPlayer(void);
+        void slotDeletePlayer(void);
         
     signals:
 	void sigNewGame(void);

@@ -15,6 +15,7 @@
 #include <QWidget>
 #include <qt5/QtWidgets/qlayout.h>
 #include "rkPokadice.h"
+#include "version.h"
 
 int main(int argc, char *argv[]) {
     // initialize resources, if needed

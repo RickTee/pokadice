@@ -91,6 +91,11 @@ rkScorecard::rkScorecard(QWidget * parent) : QWidget(parent) {
 rkScorecard::~rkScorecard() {
 }
 
+int rkScorecard::getScore(void)
+{
+    return (this->score[GRANDTOTAL]);
+}
+
 bool rkScorecard::isScorecardFull(void)
 {
     if(this->cardFull == TOTALSCORES) return (true);
@@ -112,7 +117,7 @@ void rkScorecard::scorecardReset(void) {
         }
     }
     setTotal();
-    toggleScoreButtons(true); /* Disable the score buttons. */
+    toggleScoreButtons(false); /* Disable the score buttons. */
 }
 
 void rkScorecard::toggleScoreButtons(bool state) {
@@ -228,20 +233,18 @@ void rkScorecard::setScore(int *dice_values) {
 
     score[CHANCE] = 0;
     for (i = 0; i < UPPERSCORES; i++) {
-        score[i] = result[i] * (i + 1); /* Calculate upper scores. */
-        score[CHANCE] += score[i]; /* Add up dice for CHANCE. */
-        if (result[i] == 2) fh1 = 1; /* Set flag 1 for FULL_HOUSE. */
-        if (result[i] == 5) /* Check for POKA. */ {
-            score[POKA] = 50;
-        }
+        score[i] = result[i] * (i + 1);         /* Calculate upper scores. */
+        score[CHANCE] += score[i];              /* Add up dice for CHANCE. */
+        if (result[i] == 2) fh1 = 1;            /* Set flag 1 for FULLHOUSE. */
+        if (result[i] == 5) score[POKA] = 50;   /* Check for POKA. */ 
     }
 
     for (i = 0; i < UPPERSCORES; i++) {
         if (result[i] >= 3) {
-            score[THREEOFAKIND] = score[CHANCE];
-            fh2 = 1;
+            score[THREEOFAKIND] = 15;
+            fh2 = 1;                            /* Set flag 2 for FULLHOUSE. */
         }
-        if (result[i] >= 4) score[FOUROFAKIND] = score[CHANCE];
+        if (result[i] >= 4) score[FOUROFAKIND] = 20;
     }
     if ((fh1 + fh2) == 2) score[FULLHOUSE] = 25;
     if (result[0] && result[1] && result[2] && result[3]) score[LOWSTRAIGHT] = 30;

@@ -15,8 +15,15 @@
 
 rkPrefs::rkPrefs() {
     sprintf(this->fileName, "%s%s%s", HOME_PATH, FILE_PATH, FILE_NAME);
+    //fileName = QApplication::applicationDirPath() + "/prefs.ini";
+    // Default settings
+    this->gameType = TRAVEL;
+    this->numOfPlayers = 1;
+    this->playerNames[0] = new QString("Player 1");
+    this->numOfHighscores = 0;
+
     this->loadPrefs();
-    this->savePrefs();
+    //this->savePrefs();
 }
 
 //rkPrefs::rkPrefs(const rkPrefs& orig) {
@@ -25,33 +32,74 @@ rkPrefs::rkPrefs() {
 rkPrefs::~rkPrefs() {
 }
 
-void rkPrefs::savePrefs(){
-    std::ofstream file_Handle;
+void rkPrefs::getAtribute(int att, _Msg *msg) {
+    switch (att) {
+        case GAME_TYPE: msg->gameType = this->gameType;
+            break;
+        case NUM_OF_PLAYERS: msg->numOfPlayers = this->numOfPlayers;
+            break;
+        case PLAYER_NAMES: msg->playerNames = this->playerNames;
+            break;
 
-    // File Open
-    file_Handle.open(this->fileName);
+    }
 
-    //std::cout << "this->fileName " << this->fileName;
-    
-    file_Handle << this->playerNames[0] << ";";
-    file_Handle << this->playerNames[1];
-
-    // File Close
-    file_Handle.close();
-    //return 0;
 }
 
-void rkPrefs::loadPrefs()
-{
-    std::ofstream file_Handle;
-    std::ifstream MyReadFile(this->fileName);
+void rkPrefs::savePrefs() {
+    int i;
+
+    QSettings settings(this->fileName, QSettings::NativeFormat);
+    settings.beginGroup("Game");
+    settings.setValue("Type", this->gameType);
+    settings.endGroup();
+
+    settings.beginGroup("PlayerNames");
+    settings.beginWriteArray("Players");
+    for (i = 0; i < this->numOfPlayers; i++) {
+        settings.setArrayIndex(i);
+        settings.setValue("Name", *this->playerNames[i]);
+    }
+    settings.endArray();
+    settings.endGroup();
     
-    std::string input;
-    //file_Handle.open(this->fileName);
+    settings.beginGroup("HighScoreNames");
+    settings.beginWriteArray("HighScores");
+    for (i = 0; i < this->numOfHighscores; i++) {
+        settings.setArrayIndex(i);
+        settings.setValue("Name", *this->highScoreNames[i]);
+        settings.setValue("Score", this->highScoreScores[i]);
+    }
+    settings.endArray();
+    settings.endGroup();
+}
+
+void rkPrefs::loadPrefs() {
+    int i;
+
+    if (QFile(fileName).exists()) {
+        QSettings settings(this->fileName, QSettings::NativeFormat);
+        settings.beginGroup("Game");
+        this->gameType = settings.value("type", "").toInt();
+        settings.endGroup();
+
+        settings.beginGroup("PlayerNames");
+        this->numOfPlayers = settings.beginReadArray("Players");
+        for (i = 0; i < this->numOfPlayers; i++) {
+            settings.setArrayIndex(i);
+            this->playerNames[i] = new QString(settings.value("Name").toString());
+        }
+        settings.endArray();
+        settings.endGroup();
+        
+        settings.beginGroup("HighScoreNames");
+        settings.beginReadArray("HighScores");
+        for (i = 0; i < this->numOfHighscores; i++) {
+            settings.setArrayIndex(i);
+            this->highScoreNames[i] = new QString(settings.value("Name").toString());
+            this->highScoreScores[i] = settings.value("Score").toInt();
+        }
+        settings.endArray();
+        settings.endGroup();
     
-    getline (MyReadFile, input);
-    std::cout << "Input = " << input;
-    
-    strncpy(this->playerNames[0], "Rick", MAXLEN);
-    strncpy(this->playerNames[1], "Richard", MAXLEN);
+    } else savePrefs();
 }

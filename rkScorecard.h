@@ -53,6 +53,7 @@ public:
     void        setScore(int *);
     // Check if this score card is full
     bool        isScorecardFull(void);
+    int         getScore(void);
 
     private slots:
         // These just map the button released signals of the scores
