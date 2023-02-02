@@ -13,7 +13,7 @@
 
 #define SPC         " "
 #define RELEASE     "1.0"
-#define REVISION    ".1"
+#define REVISION    ".2"
 #define DATE        "( Dec 2022)"
 #define YEAR        "2022 - 2026"
 #define VERSION     RELEASE REVISION SPC DATE
