@@ -29,7 +29,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>main.cpp</itemPath>
-      <itemPath>rkDialog.cpp</itemPath>
       <itemPath>rkDice.cpp</itemPath>
       <itemPath>rkDiceControl.cpp</itemPath>
       <itemPath>rkPokadice.cpp</itemPath>
@@ -64,6 +63,9 @@
         <modules>core gui widgets</modules>
       </qt>
       <compileType>
+        <ccTool>
+          <standard>11</standard>
+        </ccTool>
         <linkerTool>
           <linkerLibItems>
             <linkerOptionItem>`pkg-config --libs glib-2.0`</linkerOptionItem>
@@ -85,8 +87,6 @@
       <item path="gfx/untitled.ui" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="rkDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="rkDialog.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -152,8 +152,6 @@
       <item path="gfx/untitled.ui" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="rkDialog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="rkDialog.h" ex="false" tool="3" flavor2="0">
       </item>

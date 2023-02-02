@@ -52,7 +52,7 @@ rkDice::~rkDice() {
 
 void rkDice::setNum(int num, QPixmap *diceImage) {
     // If this dice is held then return
-    if (this->onOff) return;
+    if (this->onOff == true) return;
     this->number = num;
     // Set the pixmap
     this->diceFace->setPixmap(*diceImage);
@@ -81,7 +81,7 @@ void rkDice::resetHold(void) {
 void rkDice::slotToggleHold(void) {
     if (this->holdButton->isEnabled()) {
         // Hold off
-        if (this->onOff) {
+        if (this->onOff == true) {
             this->onOff = false;
             this->setStyleSheet("QPushButton {color: black}");
             this->holdButton->setText("Hold");

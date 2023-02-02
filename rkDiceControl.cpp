@@ -10,7 +10,7 @@
  * 
  * Created on 18 December 2022, 09:20
  */
-#include <stdio.h>
+#include <iostream>
 #include <time.h>
 #include <qt5/QtWidgets/qlayout.h>
 #include "rkDiceControl.h"
@@ -18,15 +18,16 @@
 rkDiceControl::rkDiceControl(int numOfDice, QWidget * parent) : QWidget (parent){
     
     int i;
+    this->dicePixmaps[0] = new QPixmap("gfx/d1.png");
+    this->dicePixmaps[1] = new QPixmap("gfx/d2.png");
+    this->dicePixmaps[2] = new QPixmap("gfx/d3.png");
+    this->dicePixmaps[3] = new QPixmap("gfx/d4.png");
+    this->dicePixmaps[4] = new QPixmap("gfx/d5.png");
+    this->dicePixmaps[5] = new QPixmap("gfx/d6.png");
     this->numOfDice = numOfDice;
     this->rollCount = 3;
     this->hBox = new QHBoxLayout(this);
     
-    for(i = 0; i < 6; i ++)
-    {
-        QString tmp = QString::number(i+1);
-        this->dicePixmaps[i] = new QPixmap("gfx/d" + tmp + ".png");
-    }
     for(i = 0; i < this->numOfDice; i ++)
     {
         this->diceValues[i] = randNum(6);
@@ -129,5 +130,6 @@ int rkDiceControl::randNum(int max)
 	val = (float)rand();
 	num = (int)((val / RAND_MAX) * max);
 	if(num == max) { num = randNum(max); }
+        // rand() % 6
 	return(num);
 }

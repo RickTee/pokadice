@@ -20,6 +20,7 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include "rkDice.h"
+#include "rkPrefs.h"
 
 class rkDiceControl : public QWidget{
     Q_OBJECT
@@ -33,10 +34,10 @@ public:
     QPushButton *rollDiceButton;
     QLabel      *rollCountLabel;
     QPixmap     *dicePixmaps[6];
-    rkDice      *diceArray[6];
+    rkDice      *diceArray[NUMOFDICE];
     int         numOfDice;
     int         rollCount;
-    int         diceValues[6];
+    int         diceValues[NUMOFDICE];
 
     int randNum(int);
     void diceReset(void);

@@ -18,10 +18,12 @@
 #include <QBoxLayout>
 #include <QTabWidget>
 #include <QMenuBar>
-#include "rkDialog.h"
+#include <QPushButton>
 #include "rkDiceControl.h"
 #include "rkScorecard.h"
 #include "rkPrefs.h"
+
+#define TEST 1 // Creates a button for testing
 
 class rkPokadice : public QWidget{
     Q_OBJECT
@@ -42,28 +44,24 @@ public:
     QAction         *preferences;
     QAction         *about;
     rkPrefs         *prefs;
-    rkDialog        *dialog;
     int             currentPlayer;
+    QPushButton     *testButton;
     void            addScorecards(void);
+    void            removeScorcards(void);
     void            endGame(void);
     private:
         void buildMenu(void);
         void randomize(void);
     public slots:
-        void slotSetScore(void);  // Tell the current players scorecard
-                                    // to display possible scores.
-	//void slotIsGameOver(void);  // Check for end game.
-	//void slotAddPlayer(void);   // Add a scorecard.
-	//void slotChangeName(void);  // Change the tab name.
-	//void slotDeletePlayer(void);// Remove a scorecard.
-	//void slotNewGame(void);     // Reset scorecards and dice.
-	//void slotAbout(void);       // About dialog.
+        void slotSetScore(void);    // Tell the current players scorecard
+                                    // to display possible scores
         void slotEndTurn(void);
     private slots:
-        void slotNewGame(void);
+        void slotNewGame(void);     // Reset scorecards and dice.
         void slotQuitGame(void);
         void slotPrefs(void);
         void slotAbout(void);
+        void slotTestGame(void);
     signals:
 	void sigGameOver(void);
         void sigExit(void);         // User wants to quit.

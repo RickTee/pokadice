@@ -123,14 +123,14 @@ void rkScorecard::scorecardReset(void) {
 void rkScorecard::toggleScoreButtons(bool state) {
     int i;
     for (i = 0; i < NUMOFSCORES; i++) {
-        if (this->scoreButtons[i] && !(this->scoreDone[i])) {
+        if (this->scoreButtons[i] != NULL && (this->scoreDone[i] == false)) {
             this->scoreButtons[i]->setEnabled(state);
         }
     }
 }
 
 void rkScorecard::fixScore(int but) {
-    if (!this->scoreDone[but]) {
+    if (this->scoreDone[but] == false) {
         this->scoreDone[but] = true;
         this->scoreButtons[but]->setEnabled(false);
         this->scoreValues[but]->setStyleSheet("QLabel {color: blue}");
@@ -152,7 +152,7 @@ void rkScorecard::setTotal(void) {
     this->cardFull = 0;
     // Add upper scores
     for (i = 0; i < UPPERSCORES; i++) {
-        if (this->scoreDone[i]) {
+        if (this->scoreDone[i] == true) {
             utotal += this->score[i];
             // Keep count of the num of scores that are set.
             this->cardFull++;
@@ -178,7 +178,7 @@ void rkScorecard::setTotal(void) {
     this->scoreValues[UPPERTOTAL2]->setText(string);
     // Add lower scores
     for (i = UPPERSCORES; i < NUMOFSCORES; i++) {
-        if (this->scoreDone[i]) {
+        if (this->scoreDone[i] == true) {
             //string = this->score[i]->text();
             temp = this->score[i];
             ltotal += temp;
@@ -255,7 +255,7 @@ void rkScorecard::setScore(int *dice_values) {
 
     for (i = 0; i < NUMOFSCORES; i++) {
         /* Don't change the scores if they are set or if its the totals */
-        if ((!this->scoreDone[i]) && (!(((i > 5) && (i < 9)) || (i > 15)))) {
+        if ((this->scoreDone[i] == false) && (!(((i > 5) && (i < 9)) || (i > 15)))) {
             string.setNum(score[i]);
             this->score[i] = score[i];
             this->scoreValues[i]->setText(string);

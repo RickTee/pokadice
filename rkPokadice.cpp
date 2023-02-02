@@ -28,9 +28,14 @@ rkPokadice::rkPokadice(QWidget * parent) : QWidget(parent) {
     this->vBox->addWidget(this->diceControl);
     this->vBox->addWidget(this->scoreTabs);
     this->currentPlayer = 0;
-
+    
+    if(TEST) {
+        this->testButton = new QPushButton("Test");
+        this->vBox->addWidget(this->testButton);
+        connect(this->testButton, SIGNAL(clicked()), this, SLOT(slotTestGame()));
+    }
     addScorecards();
-
+    
     connect(this->diceControl, SIGNAL(diceRolled()), this, SLOT(slotSetScore()));
 }
 
@@ -76,33 +81,38 @@ void rkPokadice::addScorecards() {
     }
 }
 
+void rkPokadice::removeScorcards() {
+    this->scoreTabs->clear();
+    // Seems there is not need to delete the tab pages, run a profile to make sure
+    //for(i = 0; i < this->prefs->numOfPlayers; i++){
+        //if(this->scorecard[i]) delete this->scorecard[i];
+    //}
+}
+
 void rkPokadice::slotNewGame() {
-    int i;
-    if (this->dialog) this->dialog->close();
+    
     this->diceControl->diceReset();
-    for (i = 0; i < this->prefs->numOfPlayers; i++) {
-        this->scorecard[i]->scorecardReset();
-    }
+    // Remove the old score cards
+    this->removeScorcards();
+    this->addScorecards();
 }
 
 void rkPokadice::slotQuitGame() {
     // Clean up and exit
-    if (this->dialog) this->dialog->close();
     close();
 }
 
 void rkPokadice::slotPrefs() {
-    this->dialog = new rkDialog(this->prefs);
-    connect(this->dialog, SIGNAL(sigQuitGame()), this, SLOT(slotQuitGame()));
-    connect(this->dialog, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
-    this->dialog->show();
+    this->prefs->numOfPlayersCpy = this->prefs->numOfPlayers;
+    this->prefs->settingsDialog();
+    connect(this->prefs, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
+    
 }
 
 void rkPokadice::slotAbout() {
-    this->dialog = new rkDialog();
-    connect(this->dialog, SIGNAL(sigQuitGame()), this, SLOT(slotQuitGame()));
-    connect(this->dialog, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
-    this->dialog->show();
+    this->prefs->aboutDialog();
+    connect(this->prefs, SIGNAL(sigQuitGame()), this, SLOT(slotQuitGame()));
+    connect(this->prefs, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
 }
 
 void rkPokadice::slotSetScore() {
@@ -143,11 +153,10 @@ void rkPokadice::endGame(void) {
         }
     }
 
-    this->dialog = new rkDialog(this->prefs->playerNames[idx], this->scorecard[idx]->getScore());
+    this->prefs->winnerDialog(this->prefs->playerNames[idx], this->scorecard[idx]->getScore());
 
-    connect(this->dialog, SIGNAL(sigQuitGame()), this, SLOT(slotQuitGame()));
-    connect(this->dialog, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
-    this->dialog->show();
+    connect(this->prefs, SIGNAL(sigQuitGame()), this, SLOT(slotQuitGame()));
+    connect(this->prefs, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
 }
 
 // Seed random number.
@@ -161,4 +170,17 @@ void rkPokadice::randomize(void) {
     ltime = ltime << 21;
     stime = (unsigned) ltime / 2;
     srand(stime);
+}
+
+void rkPokadice::slotTestGame(void){
+    int i, j;
+  
+    for(i = 0; i < this->prefs->numOfPlayers; i++){
+        for(j = 0; j < NUMOFSCORES; j++){
+            if ((!this->scorecard[i]->scoreDone[j]) && (!(((j > 5) && (j < 9)) || (j > 15)))) {
+                this->diceControl->rollDice();
+                this->scorecard[i]->scoreButtons[j]->click();
+            }
+        }
+    }
 }
