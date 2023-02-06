@@ -37,6 +37,7 @@ public:
     rkScorecard(QWidget * parent = 0);
     //rkScorecard(const rkScorecard& orig);
     virtual ~rkScorecard();
+private:
     QVBoxLayout *vBox;
     QHBoxLayout *hBox;
     QGridLayout *gBox;
@@ -50,6 +51,9 @@ public:
     void        scorecardReset(void);
     void        setTotal(void);
     void        fixScore(int);
+public:
+    bool        getScoreDone(int indx);
+    void        pressScoreButton(int indx);
     void        setScore(int *);
     // Check if this score card is full
     bool        isScorecardFull(void);

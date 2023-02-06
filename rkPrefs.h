@@ -5,14 +5,14 @@
  */
 
 /* 
- * File:   prefs.h
+ * File:   rkPrefs.h
  * Author: rick
  *
- * Created on 02 January 2023, 10:06
+ * Created on 03 February 2023, 11:32
  */
 
-#ifndef PREFS_H
-#define PREFS_H
+#ifndef RKPREFS_H
+#define RKPREFS_H
 
 #include <glib.h>
 #include <iostream>
@@ -20,13 +20,8 @@
 #include <string>
 #include <QString>
 #include <QSettings>
+#include <QVariant>
 #include <QFile>
-#include <QDialog>
-#include <QLabel>
-#include <QBoxLayout>
-#include <QPushButton>
-#include <QLineEdit>
-#include "version.h"
 
 #define TRAVEL      1
 #define NUMOFDICE   5
@@ -44,26 +39,12 @@
 #endif
 
 /* g_get_home_dir () */
-enum _Attributes {
-    GAME_TYPE, NUM_OF_PLAYERS, PLAYER_NAMES, NUM_OF_HIGHSCORES,
-    HIGH_SCORE_NAMES, HIGH_SCORE_SCORES
-};
 
-struct _Msg {
-    int gameType;
-    int numOfDice;
-    int numOfPlayers;
-    QString **playerNames;
-    int numOfHighscores;
-    QString **highScoreNames;
-    int *highScoreScores;
-};
-
-class rkPrefs : public QWidget{
-    Q_OBJECT
+class rkPrefs {
 public:
-    rkPrefs(QWidget * parent = 0);
+    rkPrefs();
     rkPrefs(const rkPrefs& orig);
+    static int instanceCount;
     virtual ~rkPrefs();
     int gameType;
     int numOfPlayers;
@@ -72,49 +53,11 @@ public:
     int numOfHighscores;
     QString *highScoreNames[MAXHIGHSCORES];
     int highScoreScores[MAXHIGHSCORES];
-    QDialog     *dialog;
-    QVBoxLayout *vBox;
-    QHBoxLayout *hBox;
-    QHBoxLayout *hBox1;
-    QLabel *title;
-    QLabel *message;
-    QLabel *winnerScore;
-    QLabel *winnerName;
-    QString *winner;
-    QString *wScore;
-    QPushButton *addPlayerButton;
-    QPushButton *deletePlayerButton;
-    QPushButton *okButton;
-    QPushButton *cancelButton;
-    QPushButton *newGameButton;
-    QPushButton *quitButton;
-    QPushButton *resetScoreButton;
-    QLineEdit *playerEdit[MAXPLAYERS];
-    void    setMessage(QString);
-    void    setAtribute(int att, _Msg *msg);
-    void    getAtribute(int att, _Msg *msg);
-    void    savePrefs(void);
-    void    loadPrefs(void);
-    void    aboutDialog(void);
-    void    winnerDialog(QString *name, int score);
-    void    settingsDialog(void);
-
+    void savePrefs(void);
+    void loadPrefs(void);
 private:
-    char fileName[512];
-    
-public slots:
-    void slotExitDialog(void);
-    void slotSettingsDone(void);
-    void slotSettingsCancelled(void);
-    void slotAddPlayer(void);
-    void slotDeletePlayer(void);
-    void slotQuitGame(void);
-    void slotNewGame(void);
-
-signals:
-    void sigNewGame(void);
-    void sigQuitGame(void);
+    QString *fileName;
 };
 
-#endif /* PREFS_H */
+#endif /* RKPREFS_H */
 

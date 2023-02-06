@@ -20,37 +20,38 @@
 #include <QBoxLayout>
 #include <QPushButton>
 #include "rkDice.h"
-#include "rkPrefs.h"
+#include "rkDialog.h"
 
-class rkDiceControl : public QWidget{
+class rkDiceControl : public QWidget {
     Q_OBJECT
 public:
     rkDiceControl(int numOfDice, QWidget * parent = 0);
     //rkDiceControl(const rkDiceControl& orig);
     virtual ~rkDiceControl();
+    void diceReset(void);
+    int diceValues[NUMOFDICE];
+private:
     QHBoxLayout *hBox;
     QVBoxLayout *vBox;
     QPushButton *toggleButton;
     QPushButton *rollDiceButton;
-    QLabel      *rollCountLabel;
-    QPixmap     *dicePixmaps[6];
-    rkDice      *diceArray[NUMOFDICE];
-    int         numOfDice;
-    int         rollCount;
-    int         diceValues[NUMOFDICE];
+    QLabel *rollCountLabel;
+    QPixmap *dicePixmaps[6];
+    rkDice *diceArray[NUMOFDICE];
+    int numOfDice;
+    int rollCount;
 
     int randNum(int);
-    void diceReset(void);
     void disableHolds(void);
-    
-public slots:
-	//void slot_clicked (int state){ clicked(state); }
+
+private slots:
     void toggleHolds();
+
+public slots:
+    //void slot_clicked (int state){ clicked(state); }
     void rollDice();
-    
 signals:
     void diceRolled();
-
 };
 
 #endif /* RKDICECONTROL_H */

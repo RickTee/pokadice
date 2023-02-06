@@ -96,6 +96,14 @@ int rkScorecard::getScore(void)
     return (this->score[GRANDTOTAL]);
 }
 
+bool rkScorecard::getScoreDone(int indx){
+    return this->scoreDone[indx];
+}
+
+void rkScorecard::pressScoreButton(int indx){
+    this->scoreButtons[indx]->click();
+}
+
 bool rkScorecard::isScorecardFull(void)
 {
     if(this->cardFull == TOTALSCORES) return (true);
@@ -138,7 +146,7 @@ void rkScorecard::fixScore(int but) {
     setTotal();
     toggleScoreButtons(false); /* Disable the score buttons. */
     // End turn
-    emit this->sigTurnDone();
+    emit sigTurnDone();
 }
 
 // Add up the scores and display the totals.

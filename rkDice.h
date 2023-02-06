@@ -20,32 +20,32 @@
 #include <QBoxLayout>
 #include <QPushButton>
 
-class rkDice : public QWidget{
+class rkDice : public QWidget {
     Q_OBJECT
 public:
     rkDice(int num, QPixmap *diceImage, QWidget * parent = 0);
     //rkDice(const rkDice& orig);
     virtual ~rkDice();
-    QVBoxLayout *vBox;
-    QHBoxLayout *hBoxDice;
-    QHBoxLayout *hBoxHoldButton;
-    QLabel      *diceFace;
-    QPushButton *holdButton;
-    QPixmap     *pixMap;
-    bool        onOff;
-    
     bool getHold(void);
     void disableHold(void);
     void enableHold(void);
     void resetHold(void);
     void setNum(int, QPixmap *);
     int getNum(void);
+private:
+    QVBoxLayout *vBox;
+    QHBoxLayout *hBoxDice;
+    QHBoxLayout *hBoxHoldButton;
+    QLabel *diceFace;
+    QPushButton *holdButton;
+    QPixmap *pixMap;
+    bool onOff;
     int number;
-    
-    public slots:
-        void slotToggleHold(void);
-        
-    signals:
+
+public slots:
+    void slotToggleHold(void);
+
+signals:
 };
 
 #endif /* RKDICE_H */

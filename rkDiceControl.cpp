@@ -39,7 +39,8 @@ rkDiceControl::rkDiceControl(int numOfDice, QWidget * parent) : QWidget (parent)
     this->toggleButton->setToolTip("Toggle all holds");
     this->toggleButton->setMinimumWidth(40);
     this->toggleButton->setMaximumWidth(40);
-    this->rollCountLabel    = new QLabel(QString::number(this->rollCount)); //str.toInt();
+    this->rollCountLabel    = new QLabel();
+    this->rollCountLabel->setNum(this->rollCount);
     this->rollCountLabel->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     this->rollCountLabel->setMargin(-4);
     this->rollDiceButton    = new QPushButton("Roll");
@@ -64,6 +65,11 @@ rkDiceControl::rkDiceControl(int numOfDice, QWidget * parent) : QWidget (parent)
 //}
 
 rkDiceControl::~rkDiceControl() {
+    int i;
+    for(i = 0; i < 6; i++) {
+        delete this->dicePixmaps[i];
+    }
+    
 }
 
 void rkDiceControl::disableHolds(void)
@@ -95,7 +101,8 @@ void rkDiceControl::diceReset(void)
     }
     /* Reset the roll count */
     this->rollCount = 3;
-    this->rollCountLabel->setText(QString::number(this->rollCount));
+    //this->rollCountLabel->setText(QString::number(this->rollCount));
+    this->rollCountLabel->setNum(this->rollCount);
 }
 
 void rkDiceControl::rollDice()
@@ -106,7 +113,7 @@ void rkDiceControl::rollDice()
     {
         for(i=0; i < this->numOfDice; i++)
         {
-            if(!(this->diceArray[i]->getHold()))
+            if(this->diceArray[i]->getHold() == false)
             {
                 this->diceValues[i] = randNum(6);
                 this->diceArray[i]->setNum(this->diceValues[i], this->dicePixmaps[this->diceValues[i]]);
@@ -114,8 +121,8 @@ void rkDiceControl::rollDice()
             this->diceArray[i]->enableHold();
         }
         --this->rollCount;
-        this->rollCountLabel->setText(QString::number(this->rollCount));
-        
+        //this->rollCountLabel->setText(QString::number(this->rollCount));
+        this->rollCountLabel->setNum(this->rollCount);
         // Send signal dice_rolled
         emit diceRolled();
     }
