@@ -16,8 +16,8 @@
 #include "rkDialog.h"
 
 // About constructor
-rkDialog::rkDialog(QWidget * parent = 0) : QDialog(parent) {
-    QString *aboutString = new QString(APPLICATION"\n" DESCRIPTION"\n\n" "Author: " AUTHOR"\n" EMAIL"\n");
+rkDialog::rkDialog(QWidget * parent) : QDialog(parent) {
+    //QString *aboutString = new QString(APPLICATION"\n" DESCRIPTION"\n\n" "Author: " AUTHOR"\n" EMAIL"\n");
     
     this->setModal(true);
     this->setWindowTitle("About");
@@ -25,7 +25,7 @@ rkDialog::rkDialog(QWidget * parent = 0) : QDialog(parent) {
     this->hBox = new QHBoxLayout();
     this->title = new QLabel("About");
     this->title->setAlignment(Qt::AlignCenter);
-    this->message = new QLabel(*aboutString);
+    this->message = new QLabel(APPLICATION"\n" DESCRIPTION"\n\n" "Author: " AUTHOR"\n" EMAIL"\n");
     this->message->setAlignment(Qt::AlignCenter);
     this->okButton = new QPushButton("Ok");
     this->newGameButton = new QPushButton("New Game");
@@ -33,7 +33,6 @@ rkDialog::rkDialog(QWidget * parent = 0) : QDialog(parent) {
 
     this->vBox->addWidget(this->title);
     this->vBox->addWidget(this->message);
-    this->vBox->addWidget(this->winnerScore);
     this->setLayout(this->vBox);
     this->vBox->addLayout(this->hBox);
     this->hBox->addWidget(this->okButton);
@@ -46,9 +45,7 @@ rkDialog::rkDialog(QWidget * parent = 0) : QDialog(parent) {
 }
 
 // Winner constructor
-rkDialog::rkDialog(QString *name, int score, QWidget * parent = 0) : QDialog(parent) {
-    //this->dialog = new QDialog();
-    //this->dialog->setWindowFlags("Qt::WA_DeleteOnClose");
+rkDialog::rkDialog(QString *name, int score, QWidget * parent) : QDialog(parent) {
     this->setModal(true);
     this->setWindowTitle("Game Over");
     
@@ -88,9 +85,8 @@ rkDialog::rkDialog(QString *name, int score, QWidget * parent = 0) : QDialog(par
 }
 
 // Settings constructor
-rkDialog::rkDialog(rkPrefs *prefs, QWidget * parent = 0) : QDialog(parent){
+rkDialog::rkDialog(rkPrefs *prefs, QWidget * parent) : QDialog(parent){
     int i;
-    //this->dialog = new QDialog();
     this->setModal(true);
     this->setWindowTitle("Settings");
     this->prefs = prefs;

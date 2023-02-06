@@ -20,11 +20,12 @@
 int main(int argc, char *argv[]) {
     // initialize resources, if needed
     // Q_INIT_RESOURCE(resfile);
-   
+    //rkPokadice *pokadice;
     QApplication app(argc, argv);
 
     // create and show your widgets here
     rkPokadice pokadice;
+    //pokadice = new rkPokadice();
     
     pokadice.show();
     

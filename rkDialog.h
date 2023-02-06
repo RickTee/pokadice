@@ -31,10 +31,12 @@
 class rkDialog : public QDialog {
     Q_OBJECT
 public:
-    rkDialog(QWidget * parent);     // About dialog
-    //rkDialog(int type, rkPrefs *prefs, QWidget * parent = 0);
-    rkDialog(QString *name, int score, QWidget * parent); // Winner dialog
-    rkDialog(rkPrefs *prefs, QWidget * parent); // Settings dialog
+    // About dialog
+    rkDialog(QWidget * parent = 0);
+    // Game over dialog
+    rkDialog(QString *name, int score, QWidget * parent = 0);
+    // Settings dialog
+    rkDialog(rkPrefs *prefs, QWidget * parent = 0);
     virtual ~rkDialog();
     QVBoxLayout *vBox;
     QHBoxLayout *hBox;

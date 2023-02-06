@@ -14,6 +14,7 @@
 #ifndef RKPOKADICE_H
 #define RKPOKADICE_H
 
+#include <QApplication>
 #include <QWidget>
 #include <QBoxLayout>
 #include <QTabWidget>

@@ -41,7 +41,6 @@ rkPokadice::rkPokadice(QWidget * parent) : QWidget(parent) {
 }
 
 rkPokadice::~rkPokadice() {
-    delete this->prefs;
 }
 
 void rkPokadice::buildMenu() {
@@ -99,24 +98,26 @@ void rkPokadice::slotNewGame() {
 
 void rkPokadice::slotQuitGame() {
     // Clean up and exit
-    close();
+    emit exit(0);
+    //this->close();
 }
 
 void rkPokadice::slotPrefs() {
     this->prefs->numOfPlayersCpy = this->prefs->numOfPlayers;
     this->dialog = new rkDialog(this->prefs, this);
-    //connect(this->dialog, SIGNAL(sigDialogDone()), this, SLOT(slotCloseDialog()));
+    connect(this->dialog, SIGNAL(sigDialogDone()), this, SLOT(slotCloseDialog()));
     connect(this->dialog, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
     
     this->dialog->exec();
 }
 
 void rkPokadice::slotAbout() {
+    int retval=0;
     this->dialog = new rkDialog(this);
-    //connect(this->dialog, SIGNAL(sigDialogDone()), this, SLOT(slotCloseDialog()));
+    connect(this->dialog, SIGNAL(sigDialogDone()), this, SLOT(slotCloseDialog()));
     connect(this->dialog, SIGNAL(sigQuitGame()), this, SLOT(slotQuitGame()));
     connect(this->dialog, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
-    int retval = this->dialog->exec();
+    retval = this->dialog->exec();
     std::cout << "retval : " << retval << "\n";
 }
 
@@ -158,7 +159,7 @@ void rkPokadice::endGame(void) {
         }
     }
     this->dialog = new rkDialog(this->prefs->playerNames[idx], this->scorecard[idx]->getScore(), this);
-    //connect(this->dialog, SIGNAL(sigDialogDone()), this, SLOT(slotCloseDialog()));
+    connect(this->dialog, SIGNAL(sigDialogDone()), this, SLOT(slotCloseDialog()));
     connect(this->dialog, SIGNAL(sigQuitGame()), this, SLOT(slotQuitGame()));
     connect(this->dialog, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
     
