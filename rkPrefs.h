@@ -44,7 +44,7 @@ class rkPrefs {
 public:
     rkPrefs();
     rkPrefs(const rkPrefs& orig);
-    static int instanceCount;
+    static int prefsCount;
     virtual ~rkPrefs();
     int gameType;
     int numOfPlayers;

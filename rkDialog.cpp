@@ -85,11 +85,11 @@ rkDialog::rkDialog(QString *name, int score, QWidget * parent) : QDialog(parent)
 }
 
 // Settings constructor
-rkDialog::rkDialog(rkPrefs *prefs, QWidget * parent) : QDialog(parent){
+rkDialog::rkDialog(rkPrefs *prfs, QWidget * parent) : QDialog(parent){
     int i;
     this->setModal(true);
     this->setWindowTitle("Settings");
-    this->prefs = prefs;
+    this->prefs = prfs;
     this->vBox = new QVBoxLayout();
     this->hBox = new QHBoxLayout();
     this->hBox1 = new QHBoxLayout();
@@ -102,8 +102,8 @@ rkDialog::rkDialog(rkPrefs *prefs, QWidget * parent) : QDialog(parent){
     this->vBox->addWidget(this->title);
     this->setLayout(this->vBox);
     
-    for(i = 0; i < prefs->numOfPlayers; i++){
-        this->playerEdit[i] = new QLineEdit(*prefs->playerNames[i]);
+    for(i = 0; i < this->prefs->numOfPlayers; i++){
+        this->playerEdit[i] = new QLineEdit(*this->prefs->playerNames[i]);
         this->vBox->addWidget(this->playerEdit[i]);
     }
     
@@ -124,11 +124,9 @@ rkDialog::~rkDialog() {
 }
 
 void rkDialog::slotAddPlayer(void){
-    QString *num;
+    QString num(QString::number(this->prefs->numOfPlayers + 1));
     //if(this->playerNames[this->numOfPlayers] == NULL) {
         this->prefs->playerNames[this->prefs->numOfPlayers] = new QString("Player");
-        num = new QString();
-        num->setNum(this->prefs->numOfPlayers + 1);
         this->prefs->playerNames[this->prefs->numOfPlayers]->append(num);
         this->playerEdit[this->prefs->numOfPlayers] = new QLineEdit(*this->prefs->playerNames[this->prefs->numOfPlayers]);
         this->vBox->insertWidget(this->prefs->numOfPlayers + 1, this->playerEdit[this->prefs->numOfPlayers]);
@@ -142,17 +140,19 @@ void rkDialog::slotAddPlayer(void){
 void rkDialog::slotDeletePlayer(void){
     if(this->prefs->numOfPlayers > 1) {
         //Remove the Edit box and decrement player count
-        this->vBox->removeWidget(this->playerEdit[this->prefs->numOfPlayers]);
         this->prefs->numOfPlayers--;
-        this->playerEdit[this->prefs->numOfPlayers]->~QLineEdit();
-        this->hide();
-        this->show();
+        this->vBox->removeWidget(this->playerEdit[this->prefs->numOfPlayers]);
+        
+        delete this->playerEdit[this->prefs->numOfPlayers];
+        this->adjustSize();
     }
 }
 
 void rkDialog::slotSettingsDone(void){
     int i;
     for(i = 0; i < this->prefs->numOfPlayers; i++){
+        // Delete the QStrings containing player names and recreate them
+        delete this->prefs->playerNames[i];
         this->prefs->playerNames[i] = new QString(this->playerEdit[i]->text());
     }
     this->prefs->savePrefs();

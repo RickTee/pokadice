@@ -36,7 +36,7 @@ public:
     // Game over dialog
     rkDialog(QString *name, int score, QWidget * parent = 0);
     // Settings dialog
-    rkDialog(rkPrefs *prefs, QWidget * parent = 0);
+    rkDialog(rkPrefs *prfs, QWidget * parent = 0);
     virtual ~rkDialog();
     QVBoxLayout *vBox;
     QHBoxLayout *hBox;

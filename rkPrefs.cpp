@@ -13,11 +13,11 @@
 
 #include "rkPrefs.h"
 
-int rkPrefs::instanceCount=0;
+int rkPrefs::prefsCount=0;
 
 rkPrefs::rkPrefs() {
     int i;
-    this->instanceCount ++;
+    this->prefsCount ++;
     this->fileName = new QString(HOME_PATH);
     this->fileName->append(FILE_PATH);
     this->fileName->append(FILE_NAME);
