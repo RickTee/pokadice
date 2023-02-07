@@ -18,6 +18,7 @@
 rkPokadice::rkPokadice(QWidget * parent) : QWidget(parent) {
     this->randomize();
     this->setWindowTitle("Pokadiceingtonville");
+    this->setAttribute(Qt::WA_QuitOnClose);
     buildMenu();
     this->prefs = new rkPrefs();
     this->vBox = new QVBoxLayout(this);
@@ -84,7 +85,7 @@ void rkPokadice::removeScorcards() {
      // Remove the score cards and delete them
     this->scoreTabs->clear();
     for (i = 0; i < this->prefs->numOfPlayers; i++) {
-        delete this->scorecard[i];
+        //delete this->scorecard[i];
     }
 }
 
@@ -99,16 +100,16 @@ void rkPokadice::slotNewGame() {
 void rkPokadice::slotQuitGame() {
     // Clean up and exit
     emit exit(0);
-    //this->close();
 }
 
 void rkPokadice::slotPrefs() {
+    int retval=0;
     this->prefs->numOfPlayersCpy = this->prefs->numOfPlayers;
     this->dialog = new rkDialog(this->prefs, this);
     connect(this->dialog, SIGNAL(sigDialogDone()), this, SLOT(slotCloseDialog()));
     connect(this->dialog, SIGNAL(sigNewGame()), this, SLOT(slotNewGame()));
     
-    this->dialog->exec();
+    retval = this->dialog->exec();
 }
 
 void rkPokadice::slotAbout() {
@@ -168,6 +169,11 @@ void rkPokadice::endGame(void) {
 
 void rkPokadice::slotCloseDialog(void){
     this->dialog->close();
+}
+
+void rkPokadice::closeEvent(QCloseEvent *event){
+    emit exit(0);
+    event->accept();
 }
 
 // Seed random number.

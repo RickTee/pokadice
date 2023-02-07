@@ -125,7 +125,7 @@ rkDialog::~rkDialog() {
 
 void rkDialog::slotAddPlayer(void){
     QString *num;
-    //if(!(this->playerNames[this->numOfPlayers])) {
+    //if(this->playerNames[this->numOfPlayers] == NULL) {
         this->prefs->playerNames[this->prefs->numOfPlayers] = new QString("Player");
         num = new QString();
         num->setNum(this->prefs->numOfPlayers + 1);
@@ -156,8 +156,8 @@ void rkDialog::slotSettingsDone(void){
         this->prefs->playerNames[i] = new QString(this->playerEdit[i]->text());
     }
     this->prefs->savePrefs();
-    //this->close();
     emit sigNewGame();
+    emit sigDialogDone();
 }
 
 void rkDialog::slotPrefsNewGame(void){
@@ -172,11 +172,11 @@ void rkDialog::slotPrefsQuitGame(void){
 // User pressed cancel
 void rkDialog::slotSettingsCancelled(void){
     this->prefs->numOfPlayers = this->prefs->numOfPlayersCpy;
-    slotExitDialog();
+    emit sigDialogDone();
+    //slotExitDialog();
 }
 
 void rkDialog::slotExitDialog(void){
-    //this->close();
     emit sigDialogDone();
 }
 

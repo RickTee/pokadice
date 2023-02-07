@@ -20,6 +20,7 @@
 #include <QTabWidget>
 #include <QMenuBar>
 #include <QPushButton>
+#include <QCloseEvent>
 #include "rkDiceControl.h"
 #include "rkScorecard.h"
 #include "rkDialog.h"
@@ -53,6 +54,7 @@ private:
     void addScorecards(void);
     void removeScorcards(void);
     void endGame(void);
+    void closeEvent(QCloseEvent *event);
 
     void buildMenu(void);
     void randomize(void);

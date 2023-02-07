@@ -26,7 +26,9 @@ int main(int argc, char *argv[]) {
     // create and show your widgets here
     rkPokadice pokadice;
     //pokadice = new rkPokadice();
-    
+    //pokadice.setAttribute(Qt::WA_QuitOnClose);
+    //pokadice.connect(&pokadice, SIGNAL(closeEvent()), SLOT(close()));
+    //pokadice.connect( &pokadice, SIGNAL(sig_exit()), &app, SLOT(quit()) );
     pokadice.show();
     
     return app.exec();
