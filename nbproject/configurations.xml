@@ -23,7 +23,6 @@
         <itemPath>gfx/d5.png</itemPath>
         <itemPath>gfx/d6.png</itemPath>
       </logicalFolder>
-      <itemPath>gfx/untitled.ui</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -84,8 +83,6 @@
       <item path="gfx/d5.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="gfx/d6.png" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gfx/untitled.ui" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -151,8 +148,6 @@
       <item path="gfx/d5.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="gfx/d6.png" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="gfx/untitled.ui" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
