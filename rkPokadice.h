@@ -26,7 +26,7 @@
 #include "rkDialog.h"
 #include "rkDialog.h"
 
-#define TEST 1 // Creates a button for testing
+#define TEST 0// Creates a button for testing
 
 class rkPokadice : public QWidget {
     Q_OBJECT
